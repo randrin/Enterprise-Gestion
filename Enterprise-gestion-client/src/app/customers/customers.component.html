@@ -1,0 +1,31 @@
+<div class="spacer">
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Matricule</th>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Sexe</th>
+				<th>Department</th>
+				<th>Date of Born</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let cust of customers">
+				<td style="color: red;"><b>{{ cust.matricule }}</b></td>
+				<td><b>{{ cust.firstName }}</b></td>
+				<td><b>{{ cust.lastName }}</b></td>
+				<td><b><i class="fa fa-{{cust.gender}}" style="font-size: 20px;"></i></b></td>
+				<td><b>{{ cust.department }}</b></td>
+				<td><b>{{ cust.naissance | date: 'd/MM/yyyy'}}</b></td>
+				<td (click)="onSelect(cust)"
+				[class.selected]="cust === selectedCustomer"><a class="btn btn-success" title="Details"><b style="color:white;"><i class="fa fa-eye"></i></b></a></td>
+				<td><a class="btn btn-primary" title="Editer"><b style="color:white;"><i class="fa fa-pencil-square-o"></i></b></a></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<br>
+<p style="text-align: center;"><em>@Copyright 2018 - Tous droits reservees.</em></p>
+<p style="text-align: center;"><em><b>EnInSe</b> - Engeneering Informations Services. Societe a responsabilite limitee.</em></p>
+<app-customer-details [customer]="selectedCustomer"></app-customer-details>

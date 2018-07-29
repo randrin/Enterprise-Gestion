@@ -1,0 +1,12 @@
+.spacer {
+	padding-top: 20px;
+}
+
+th {
+    background-color: blue;
+    color: white;
+}
+
+tr:nth-child(even) {
+	background-color: #f2f2f2;
+}

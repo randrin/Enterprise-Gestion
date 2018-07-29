@@ -1,0 +1,24 @@
+<h3>Find By Last Name</h3>
+<div style="width: 300px;">
+	<form (ngSubmit)="onSubmit()">
+		<div class="form-group">
+			<label for="lastname">Last Name</label>
+			<input 
+				id="lastname"
+				name="lastname"
+				type="text"
+				class="form-control"
+				required
+				[(ngModel)]="lastName"/>
+		</div>
+		<div class="btn-group">
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</div>
+	</form>
+</div>
+<br>
+<ul>
+	<li *ngFor="let cust of customers">
+		<h4>{{cust.id}} - {{cust.firstName}} {{cust.lastName}}</h4>
+	</li>
+</ul>

@@ -1,0 +1,204 @@
+<br>
+<form #emp="ngForm" ngNativeValidate (ngSubmit)="saveEmployee(employee)">
+	<div class="panel panel-primary" [hidden]="submitted">
+		<div class="panel-heading">
+			<h3 class="panel-title">
+				<b><i class="fa fa-file-text"></i> Enregistrer Nouveau Employee</b>
+			</h3>
+		</div>
+		<div class="panel-body">
+			<div class="row">
+				<!-- First Name -->
+				<div class="col-md-4">
+					<div class="form-group"
+						[class.has-error]="firstname.invalid && firstname.touched"
+						[class.has-success]="firstname.valid">
+						<label for="firstname" class="control-label"><b>First
+								Name</b></label> <input type="text" id="firstname" name="firstname" required
+							[(ngModel)]="employee.firstName" class="form-control"
+							placeholder="Enter name ..." #firstname="ngModel"> <span
+							class="help-block" *ngIf="firstname.invalid && firstname.touched">
+							First Name required </span>
+					</div>
+				</div>
+				<!-- Last Name -->
+				<div class="col-md-4">
+					<div class="form-group"
+						[class.has-error]="lastname.invalid && lastname.touched"
+						[class.has-success]="lastname.valid">
+						<label for="lastname" class="control-label"><b>Last
+								Name</b></label> <input type="text" id="lastname" name="lastname"
+							[(ngModel)]="employee.lastName" class="form-control" required
+							#lastname="ngModel"><span class="help-block"
+							*ngIf="lastname.invalid && lastname.touched"> Last Name
+							required </span>
+					</div>
+				</div>
+				<!-- Date Of Born -->
+				<div class="col-md-4">
+					<div class="form-group"
+						[class.has-error]="dateOfBorn.invalid && dateOfBorn.touched"
+						[class.has-success]="dateOfBorn.valid">
+						<label for="dateOfBorn" class="control-label"><b>Date
+								Of Born</b></label> <input type="text" id="dateOfBorn" name="dateOfBorn"
+							bsDatepicker required [(ngModel)]="employee.naissance"
+							class="form-control" #dateOfBorn="ngModel"> <span
+							class="help-block"
+							*ngIf="dateOfBorn.invalid && dateOfBorn.touched"> Date Of
+							Born required </span>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<!-- Email -->
+				<div class="col-md-6">
+					<div class="form-group" [class.has-error]="email.invalid"
+						[class.has-success]="email.valid && contactPreference.value=='email'">
+						<label for="email" class="control-label"><b>Email</b></label> <input
+							type="text" id="email" name="email" [(ngModel)]="employee.email"
+							class="form-control"
+							[required]="contactPreference.value=='email'"
+							pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9]+$"
+							#email="ngModel"> <span class="help-block"
+							*ngIf="email.errors?.required"> Email required </span> <span
+							class="help-block" *ngIf="email.errors?.pattern"> Email
+							invalid </span>
+					</div>
+				</div>
+				<!-- Phone Number -->
+				<div class="col-md-6">
+					<div class="form-group" [class.has-error]="phoneNumber.invalid"
+						[class.has-success]="phoneNumber.valid && contactPreference.value=='phone'">
+						<label for="phoneNumber" class="control-label"><b>Phone
+								Number</b></label> <input type="text" id="phoneNumber" name="phoneNumber"
+							[(ngModel)]="employee.phoneNumber"
+							[required]="contactPreference.value=='phone'"
+							#phoneNumber="ngModel" class="form-control"> <span
+							class="help-block" *ngIf="phoneNumber.errors?.required">
+							Phone Number Required </span>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<!-- Department -->
+				<div class="col-md-3">
+					<div class="form-group"
+						[class.has-error]="department.invalid && department.touched"
+						[class.has-success]="department.valid && department.value !=='-1'">
+						<label for="department" class="control-label"><b>Department</b></label>
+						<select id="department" name="department" required
+							#department="ngModel" [(ngModel)]="employee.department"
+							class="form-control">
+							<option disabled [ngValue]="null">Select Department</option>
+							<option *ngFor="let dept of departments" [value]="dept.name">{{dept.name}}</option>
+						</select> <span class="help-block"
+							*ngIf="department.invalid && department.touched">Department
+							required </span>
+					</div>
+				</div>
+				<!-- Gender -->
+				<div class="col-md-3">
+					<div class="form-group"
+						[class.has-error]="gender.invalid && gender.touched"
+						[class.has-success]="gender.valid">
+						<label class="control-label"><b>Gender</b></label>
+						<div class="form-control">
+							<label class="radio-inline"> <input type="radio"
+								value="male" name="employee.gender" required #gender="ngModel"
+								[(ngModel)]="employee.gender" checked> Male
+							</label> <label class="radio-inline"> <input type="radio"
+								value="female" name="employee.gender" required #gender="ngModel"
+								[(ngModel)]="employee.gender"> Female
+							</label> <span class="help-block"
+								*ngIf="gender.invalid && gender.touched"> Gender required
+							</span>
+						</div>
+					</div>
+				</div>
+				<!-- Contact Preference -->
+				<div class="col-md-3">
+					<div class="form-group"
+						[class.has-error]="contactPreference.invalid && contactPreference.touched"
+						[class.has-success]="contactPreference.valid">
+						<label class="control-label"><b>Contact Preference</b></label>
+						<div class="form-control">
+							<label class="radio-inline"> <input type="radio"
+								value="email" name="contactPreference" required
+								#contactPreference="ngModel"
+								[(ngModel)]="employee.contactPreference"> Email
+							</label> <label class="radio-inline"> <input type="radio"
+								value="phone" name="contactPreference" required
+								#contactPreference="ngModel"
+								[(ngModel)]="employee.contactPreference"> Phone
+							</label> <span class="help-block"
+								*ngIf="contactPreference.invalid && contactPreference.touched">
+								Contact Preference is required </span>
+						</div>
+					</div>
+				</div>
+				<!-- Activation -->
+				<div class="col-md-3">
+					<div class="form-group"
+						[class.has-error]="isActive.invalid && isActive.touched"
+						[class.has-success]="isActive.valid">
+						<label class="control-label"><b>Activation</b></label>
+						<div class="form-control">
+							<label class="checkbox-inline"> <input type="checkbox"
+								[required]="isActive.value!==''" #isActive="ngModel"
+								name="isActive" [(ngModel)]="employee.isActive"> Is
+								Active
+							</label> <span class="help-block"
+								*ngIf="isActive.invalid && isActive.touched"> Activation
+								is required </span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Button Back/Send -->
+		<div class="panel-footer">
+			<button class="btn btn-primary" (click)="goBack()"
+				style="width: 100px;">
+				<b><i class="fa fa-arrow-circle-o-left"></i> Back</b>
+			</button>
+			<button type="submit" class="btn btn-success" style="width: 100px;"
+				[disabled]="emp.invalid">
+				<b><i class="fa fa-check"></i> Save</b>
+			</button>
+		</div>
+	</div>
+</form>
+<!-- Confirmation Registration -->
+<div class="container">
+	<div class="row">
+		<div class="col-md-3"></div>
+		<div class="col-md-6 alignConfirmation">
+			<div [hidden]="!submitted">
+				<div class="panel panel-success">
+					<div class="panel-heading">
+						<h2 class="panel-title">
+							<b>Confirmation</b>
+						</h2>
+					</div>
+					<div class="panel-body">
+						<h3 class="alignConfirmation textConfirmation">
+							<b><i class="fa fa-check-circle" style="font-size: 30px;"></i> Successfully
+								Registred!!!</b>
+						</h3>
+						<br>
+						<button class="btn btn-primary" (click)="goBack()"
+							style="width: 100px;">
+							<b><i class="fa fa-arrow-circle-o-left"></i> Back</b>
+						</button>
+						<button class="btn btn-success" (click)="addNewCustomer()"
+							style="width: 100px;">
+							<b><i class="fa fa-user-plus"></i> Ajouter</b>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3"></div>
+	</div>
+</div>
+<!-- Angular Value Form : {{emp.value | json}} -->
